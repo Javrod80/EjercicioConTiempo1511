@@ -11,58 +11,70 @@ https://openmoji.org/data/color/svg/1F600.svg (Petición del emoji con código 1
 
 */
 
-function makeVisual() {    
+function makeVisual() {
 
-    let title = document.createElement("h1");
-    let text = document.createTextNode("Elige un Emoji");
-    title.appendChild(text);
-
-    let = selectEmoji = document.createElement("select");
-    selectEmoji.id = "selectEmoji";
-    
-   let emojis = createEmoji();
-    emojis.forEach(emoji => {
-        let option = document.createElement("option");
-        option.value = emoji.hexcode;
-        option.textContent= emoji.hexcode;
-        selectEmoji.appendChild(option);
-
-    })
-
-    let divGeneralContainer = document.createElement("div");
-    divGeneralContainer.id = "generalContainer";
-    divGeneralContainer.appendChild(title);
-    divGeneralContainer.appendChild(selectEmoji);
+  let title = document.createElement("h1");
+  let text = document.createTextNode("Elige un Emoji");
+  title.appendChild(text);
 
 
-    document.body.appendChild(divGeneralContainer);
-    
+  // crear un select
+  let = selectEmoji = document.createElement("select");
+  selectEmoji.id = "selectEmoji";
 
-    selectEmoji.addEventListener("change", (event) => {
-        let selectedEmoji = event.target.value;
-        let url = `https://openmoji.org/data/color/svg/${selectedEmoji}.svg`;
+  // crear las opciones
+  let emojis = createEmoji();
+  emojis.forEach(emoji => {
+    let option = document.createElement("option");
+    option.value = emoji.hexcode;
+    option.textContent = emoji.hexcode;
+    selectEmoji.appendChild(option);
 
-       
-        let img = document.createElement("img");
-        img.src = url;
-        img.height = 100;
-        img.width = 100;
-        let containerDiv = document.createElement("div");
-        containerDiv.appendChild(img);
-       
-        divGeneralContainer.appendChild(containerDiv);
+  })
 
-           });
-           deleteEmojis(containerDiv);
-       
+  let divGeneralContainer = document.createElement("div");
+  divGeneralContainer.id = "generalContainer";
+  divGeneralContainer.appendChild(title);
+  divGeneralContainer.appendChild(selectEmoji);
 
-     
+  // crear div para la imagen
+  let emojiDisplayContainer = document.createElement("div");
+  emojiDisplayContainer.id = "emojiDisplayContainer";
+  divGeneralContainer.appendChild(emojiDisplayContainer);
+
+
+
+
+  document.body.appendChild(divGeneralContainer);
+
+ // event listener para el select
+  selectEmoji.addEventListener("change", (event) => {
+    let selectedEmoji = event.target.value;
+    let url = `https://openmoji.org/data/color/svg/${selectedEmoji}.svg`;
+
+
+    emojiDisplayContainer.innerHTML = "";
+
+    let img = document.createElement("img");
+    img.src = url;
+    img.height = 100;
+    img.width = 100;
+
+
+
+    emojiDisplayContainer.appendChild(img);
+  });
+
+
+
+
 }
 makeVisual();
 
-function createEmoji (){
+// crear array de emojis
+function createEmoji() {
 
-   let emojis = [
+  let emojis = [
     {
       "emoji": "ðŸ˜€",
       "hexcode": "1F600",
@@ -387,12 +399,5 @@ function createEmoji (){
       "order": 19
     }]
   return emojis;
-
-}
- function deleteEmojis( container) {
-    while (container.firstChild.img) {
-        container.firstChild.remove();
-    }
-   
 
 }
